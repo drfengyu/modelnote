@@ -54,7 +54,7 @@ async function handleRequest(request) {
     const responseBody = await responseClone.text();
     console.log(responseBody);
     }
-    const newHeaders = new Headers(responseClone.headers);
+    const newHeaders = new Headers(response.headers);
     newHeaders.set('Access-Control-Allow-Origin', '*');
 
     return new Response(response.body, {
