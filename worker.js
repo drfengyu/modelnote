@@ -50,8 +50,9 @@ async function handleRequest(request) {
     });
     
     const responseClone = response.clone();
+    const responseClone2 = response.clone();
     if (request.method === 'POST') {
-    const responseBody = await responseClone.text();
+    const responseBody = await responseClone2.text();
     console.log(responseBody);
     }
     const newHeaders = new Headers(responseClone.headers);
