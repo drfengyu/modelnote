@@ -1,0 +1,11 @@
+name = "${WORKER_NAME}"
+main = "${WORKER_MAIN}"
+compatibility_date = "${WORKER_COMPATIBILITY_DATE}"
+route = { pattern = "${WORKER_ROUTE_PATTERN}", zone_name = "${WORKER_ZONE_NAME}" }
+kv_namespaces = [
+  { binding = "WORKER_LOG", id = "${WORKER_KV_ID}" }
+]
+[observability]
+enabled = true
+head_sampling_rate = 1
+

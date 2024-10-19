@@ -1,0 +1,40 @@
+name: Deploy Cloudflare Worker
+
+on:
+  push:
+    branches:
+      - main  # 触发工作流的分支
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # 或您需要的版本
+
+      - name: Install Wrangler
+        run: npm install -g wrangler
+
+      - name: Generate wrangler.toml
+        run: |
+          echo "name = \"${{ secrets.WORKER_NAME }}\"" > wrangler.toml
+          echo "main = \"${{ secrets.WORKER_MAIN }}\"" >> wrangler.toml
+          echo "compatibility_date = \"${{ secrets.WORKER_COMPATIBILITY_DATE }}\"" >> wrangler.toml
+          echo "route = { pattern = \"${{ secrets.WORKER_ROUTE_PATTERN }}\", zone_name = \"${{ secrets.WORKER_ZONE_NAME }}\" }" >> wrangler.toml
+          echo "kv_namespaces = [" >> wrangler.toml
+          echo "  { binding = \"WORKER_LOG\", id = \"${{ secrets.WORKER_KV_ID }}\" }" >> wrangler.toml
+          echo "]" >> wrangler.toml
+          echo "[observability]" >> wrangler.toml
+          echo "enabled = true" >> wrangler.toml
+          echo "head_sampling_rate = 1" >> wrangler.toml
+
+      - name: Deploy Worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: wrangler deploy
