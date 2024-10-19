@@ -48,9 +48,10 @@ async function handleRequest(request) {
         body: request.method === 'POST' ? request.body : null,
         redirect: 'follow'
     });
-
+    
     const responseClone = response.clone();
-    console.log(responseClone.body);
+    const responseBody = await responseClone.text();
+    console.log(responseBody);
     const newHeaders = new Headers(responseClone.headers);
     newHeaders.set('Access-Control-Allow-Origin', '*');
 
