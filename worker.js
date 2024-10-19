@@ -50,7 +50,6 @@ async function handleRequest(request) {
     });
     
     const responseClone = response.clone();
-    const responseClone2 = response.clone();
     if (request.method === 'POST') {
     const responseBody = await responseClone2.text();
     console.log(responseBody);
@@ -58,7 +57,7 @@ async function handleRequest(request) {
     const newHeaders = new Headers(responseClone.headers);
     newHeaders.set('Access-Control-Allow-Origin', '*');
 
-    return new Response(responseClone.body, {
+    return new Response(response.body, {
         status: response.status,
         statusText: response.statusText,
         headers: newHeaders
