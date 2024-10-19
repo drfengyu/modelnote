@@ -50,7 +50,7 @@ async function handleRequest(request) {
     });
     
     const responseClone = response.clone();
-    if (request.method === 'POST') {
+    if (request.method === 'GET') {
     const responseBody = await responseClone.text();
     console.log(responseBody);
     }
