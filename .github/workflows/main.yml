@@ -26,8 +26,7 @@ jobs:
           echo "name = \"${{ secrets.WORKER_NAME }}\"" > wrangler.toml
           echo "main = \"${{ secrets.WORKER_MAIN }}\"" >> wrangler.toml
           echo "compatibility_date = \"${{ secrets.WORKER_COMPATIBILITY_DATE }}\"" >> wrangler.toml
-          echo "custom_domain = \"${{ secrets.CUSTOM_DOMAIN }}\"" >> wrangler.toml
-          echo "zone_name=\"${{ secrets.WORKER_ZONE_NAME }}\"" >> wrangler.toml 
+          echo "route = { pattern = \"${{ secrets.WORKER_ROUTE_PATTERN }}\", zone_name = \"${{ secrets.WORKER_ZONE_NAME }}\" }" >> wrangler.toml 
           echo "kv_namespaces = [" >> wrangler.toml
           echo "  { binding = \"WORKER_LOG\", id = \"${{ secrets.WORKER_KV_ID }}\" }" >> wrangler.toml
           echo "]" >> wrangler.toml
