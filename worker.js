@@ -17,8 +17,9 @@ async function handleRequest(request) {
         const response = await fetch(targetUrl, {
             method: request.method,
             headers: {
-                'User-Agent': request.headers.get('User-Agent'), // 保留用户代理
-                // 可以在这里添加其他必要的头部
+                'User-Agent': request.headers.get('User-Agent') || 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+                // 这里可以添加 Authorization 头
+                // 'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
             },
             redirect: 'follow'
         });
@@ -40,6 +41,7 @@ async function handleRequest(request) {
     // 处理其他请求（例如 API 请求）
     const targetUrl = 'https://huggingface.co' + url.pathname + url.search;
     const modifiedHeaders = new Headers(request.headers);
+    modifiedHeaders.set('User-Agent', request.headers.get('User-Agent') || 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'); // 添加用户代理
     modifiedHeaders.delete('Origin');
 
     const response = await fetch(targetUrl, {
