@@ -50,6 +50,7 @@ async function handleRequest(request) {
     });
 
     const responseClone = response.clone();
+    console.log(responseClone.body);
     const newHeaders = new Headers(responseClone.headers);
     newHeaders.set('Access-Control-Allow-Origin', '*');
 
